@@ -1,0 +1,7 @@
+eschool_subject:
+    resource: "@EschoolBundle/Resources/config/routing/subject.yml"
+    prefix:   /subject
+
+eschool_homepage:
+    path:     /toto
+    defaults: { _controller: EschoolBundle:Default:index }

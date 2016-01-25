@@ -1,0 +1,7 @@
+students_list:
+    path: /
+    defaults: { _controller: UserBundle:Student:index }
+
+students_delete:
+    path: /{id}/delete
+    defaults: { _controller: UserBundle:Student:delete }

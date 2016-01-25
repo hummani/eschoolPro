@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+{% block student %}
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des eleves</h3>
+                </div>
+
+                <div class="panel-body panel-body-table">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                            <tr>
+                                <th width="100">Nom</th>
+                                <th width="100">actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for student in students %}
+
+                                <tr id="trow_1">
+                                    <td>{{ student.id }}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+
+                                                <a  href="{{ path('students_delete', { 'id': student.id }) }}" class="btn btn-primary btn-block deco-none">Voir details</a>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <a href="{{ path('login', { 'id': student.id }) }}" class="btn btn-info btn-block deco-none ">Supprimer</a>
+                                            </div>
+
+                                        </div>
+
+                                    </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

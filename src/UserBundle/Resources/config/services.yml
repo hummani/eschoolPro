@@ -1,0 +1,93 @@
+parameters:
+    symfony.form.class: Symfony\Component\Form\Form
+    adstract_user_handler.class: UserBundle\Form\Handler\AbstractUserHandler
+
+    user_type.class: UserBundle\Form\Type\UserType
+    user_handler.class: UserBundle\Form\Handler\UserHandler
+    user_manager.class: UserBundle\Entity\Managers\UserManager
+
+    student_type.class: UserBundle\Form\Type\StudentType
+    student_handler.class: UserBundle\Form\Handler\StudentHandler
+    student_manager.class: UserBundle\Entity\Managers\StudentManager
+
+    teacher_type.class: UserBundle\Form\Type\TeacherType
+    teacher_handler.class: UserBundle\Form\Handler\TeacherHandler
+    teacher_manager.class: UserBundle\Entity\Managers\TeacherManager
+
+services:
+#----------------------- start form services -----------------------
+    abstract_user_form:
+        factory_service: form.factory
+        factory_method: createNamed
+        class: %symfony.form.class%
+        abstract: true
+
+    user_form:
+        parent: abstract_user_form
+        arguments:
+            - user
+            - user_form
+
+    student_form:
+        parent: abstract_user_form
+        arguments:
+            - student
+            - student_form
+
+    teacher_form:
+            parent: abstract_user_form
+            arguments:
+                - teacher
+                - teacher_form
+
+    user_type:
+        class: %user_type.class%
+        tags:
+            - { name: form.type, alias: user_form }
+
+    student_type:
+        class: %student_type.class%
+        tags:
+            - { name: form.type, alias: student_form }
+
+    teacher_type:
+        class: %teacher_type.class%
+        tags:
+            - { name: form.type, alias: teacher_form }
+
+#------------------------user types manager ----------------------------
+
+    user_manager:
+        class: %user_manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+
+    student_manager:
+        class: %student_manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+#---------------------------------------------------------------------
+
+    abstract_user_handler:
+        class: %adstract_user_handler.class%
+        arguments: [@request, @security.password_encoder, @security.context, @user_manager]
+        scope: request
+
+    user_handler:
+        class: %user_handler.class%
+        parent: abstract_user_handler
+        arguments: [@user_form]
+        scope: request
+
+    student_handler:
+        class: %student_handler.class%
+        parent: abstract_user_handler
+        arguments: [@student_form]
+        scope: request
+
+    teacher_handler:
+        class: %teacher_handler.class%
+        parent: abstract_user_handler
+        arguments: [@teacher_form]
+        scope: request
+
+
+

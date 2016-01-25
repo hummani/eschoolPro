@@ -1,0 +1,23 @@
+pump:
+    resource: "@UserBundle/Resources/config/routing/student.yml"
+    prefix:   /student
+
+
+teachers_list:
+    path: /teachers
+    defaults: { _controller: UserBundle:Security:index }
+
+registration:
+    path: /register
+    defaults: { _controller: UserBundle:Security:register }
+
+login:
+    path:     /login
+    defaults: { _controller: UserBundle:Security:login }
+
+login_check:
+    path:     /login_check
+
+logout:
+    path:     /logout
+
